@@ -1,4 +1,4 @@
-<template>
+<template >
   <ion-page>
     <div class="flex w-full flex-col overflow-auto">
       <div class="mt-2">
@@ -134,12 +134,27 @@
           </router-link>
         </ion-card>
       </div>
+      <div>
+          <ion-fab @click="isOpenNewTask = true" vertical="bottom" horizontal="end" slot="fixed">
+              <ion-fab-button >
+                  <ion-icon :icon="add"></ion-icon>
+              </ion-fab-button>
+          </ion-fab>
+          <ion-modal
+          :is-open="isOpenNewTask"
+          :backdrop-dismiss="false">
+
+          <new-task @closeModal="isOpenNewTask = false"></new-task>
+          
+
+          </ion-modal>
+      </div>
     </div>
   </ion-page>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import {
   IonPage,
   IonCard,
@@ -148,6 +163,9 @@ import {
   IonCardContent,
   IonCardTitle,
   IonCardSubtitle,
+  IonFab,
+  IonFabButton,
+  IonModal
 } from "@ionic/vue";
 import {
   clipboard,
@@ -158,7 +176,9 @@ import {
   home,
   football,
   cart,
+  add
 } from "ionicons/icons";
+import NewTask from '@/components/NewTask.vue';
 
 export default defineComponent({
   components: {
@@ -169,9 +189,15 @@ export default defineComponent({
     IonCardContent,
     IonCardTitle,
     IonCardSubtitle,
+    IonFab,
+  IonFabButton,
+  IonModal,
+  NewTask
   },
   setup() {
+      const isOpenNewTask = ref(false);
     return {
+        isOpenNewTask,
       clipboard,
       briefcase,
       headset,
@@ -180,6 +206,7 @@ export default defineComponent({
       home,
       football,
       cart,
+      add
     };
   },
 });
